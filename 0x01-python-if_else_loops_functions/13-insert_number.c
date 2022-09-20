@@ -33,7 +33,7 @@ listint_t *insert_node(listint_t **head, int number)
 			curr = curr->next;
 		}
 		new->next = curr->next;
-		curr = new;
+		curr->next = new;
 	}
 	return (new);
 }
