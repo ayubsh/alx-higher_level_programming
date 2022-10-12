@@ -9,7 +9,7 @@ class Square:
     def __init__(self, size=0):
         """ constructor method for the sqaure class
         Args:
-            size: the size of the instance class
+            size: the size of the instance square
         """
         if type(size) != int:
             raise TypeError("size must be an integer")
