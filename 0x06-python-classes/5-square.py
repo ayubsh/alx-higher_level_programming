@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 
-import sys
 
 """ The square Class """
 
@@ -47,5 +46,5 @@ class Square:
             print("")
         for r in range(self.__size):
             for c in range(self.__size):
-                print("{}".format("#"), end="", file=sys.stdout)
+                print("{}".format("#"), end="")
             print("")
