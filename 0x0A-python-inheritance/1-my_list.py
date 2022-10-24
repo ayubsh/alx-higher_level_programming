@@ -5,10 +5,9 @@
 class MyList(list):
     """ Mylist class that inherit from list class """
     def __init__(self):
+        """" constructor for the Mylist class """
         super().__init__()
 
     def print_sorted(self):
         """ print sorted list in ascending """
-        s = list(self)
-        s.sort()
-        print(s)
+        print(sorted(self))
