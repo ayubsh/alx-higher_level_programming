@@ -37,9 +37,17 @@ class Base:
         """
         f_name = cls.__name__ + ".json"
         print(f_name)
-        with open(f_name, 'w', encoding="utf-8") as file:
-            if list_objs is None or len(list_objs) <= 0:
+        with open(f_name, 'w') as file:
+            if list_objs is None:
                 file.write("[]")
             else:
-                file.write(Base.to_json_string([obj.to_dictionary()
-                                               for obj in list_objs]))
+                i = [obj.to_dictionary() for obj in list_objs]
+                file.write(Base.to_json_string(i))
+
+    @staticmethod
+    def from_json_string(json_string):
+        """returns the list of the JSON string representation json_strin
+        """
+        if json_string is None or json_string == "[]":
+            return []
+        return json.loads(json_string)
