@@ -71,3 +71,21 @@ class TestRecInit(unittest.TestCase):
         rec = Rectangle(5, 7, 7, 5, 1)
         rec.y = 10
         self.assertEqual(10, rec.y)
+
+class TestRecArea(unittest.TestCase):
+    """ test the area of the rectangle """
+    def setUp(self):
+        self.rec1 = Rectangle(3, 4, 0, 0, 0)
+        self.rec3 = Rectangle(1000000000000000, 10000000000000, 0, 0, 0)
+        self.rec4 = Rectangle(2, 3, 2, 2, 2)
+
+    def test_normal_area(self):
+        self.assertEqual(12, self.rec1.area())
+
+    def test_large_area(self):
+        self.assertEqual(10000000000000000000000000000, self.rec3.area())
+
+    def test_new_att_area(self):
+        self.rec4.width = 5
+        self.rec4.height = 6
+        self.assertEqual(30, self.rec4.area())
