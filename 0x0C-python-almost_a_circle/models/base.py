@@ -41,5 +41,5 @@ class Base:
             if list_objs is None or len(list_objs) <= 0:
                 file.write("[]")
             else:
-                file.write(cls.to_json_string([obj.to_dictionary()
+                file.write(Base.to_json_string([obj.to_dictionary()
                                                for obj in list_objs]))
