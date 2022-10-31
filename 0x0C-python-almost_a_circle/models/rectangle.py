@@ -28,10 +28,10 @@ class Rectangle(Base):
         Args:
             val: new value
         """
-        if not isinstance(val, int):
-            raise TypeError()
-        if val < 0:
-            raise ValueError()
+        if type(val) != int:
+            raise TypeError("width must be an integer")
+        if val <= 0:
+            raise ValueError("width must be > 0")
         self.__width = val
 
     @property
@@ -46,9 +46,9 @@ class Rectangle(Base):
             val: new value
         """
         if not isinstance(val, int):
-            raise TypeError()
-        if val < 0:
-            raise ValueError()
+            raise TypeError("height must be an integer")
+        if val <= 0:
+            raise ValueError("height must be > 0")
         self.__height = val
 
     @property
@@ -63,9 +63,9 @@ class Rectangle(Base):
             val: new value
         """
         if not isinstance(val, int):
-            raise TypeError()
+            raise TypeError("x must be an integer")
         if val < 0:
-            raise ValueError()
+            raise ValueError("x must be >= 0")
         self.__x = val
 
     @property
@@ -80,7 +80,7 @@ class Rectangle(Base):
             val: new value
         """
         if not isinstance(val, int):
-            raise TypeError()
+            raise TypeError("y must be an integer")
         if val < 0:
-            raise ValueError()
+            raise ValueError("y must be >= 0")
         self.__y = val
