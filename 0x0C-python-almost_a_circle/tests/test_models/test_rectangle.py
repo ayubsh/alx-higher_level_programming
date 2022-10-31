@@ -95,7 +95,11 @@ class TestRecArea(unittest.TestCase):
 class TestRecDisplay(unittest.TestCase):
     """ tests displaying rectangle to stdout """
     def setUp(self):
-        pass
+        self.r1 = Rectangle(2, 3, 0, 0, 0)
+        self.r2 = Rectangle(3, 2, 1, 0, 1)
+        self.r3 = Rectangle(4, 5, 0, 1, 0)
+        self.r4 = Rectangle(2, 4, 3, 2, 0)
+        self.r5 = Rectangle(5, 1, 2, 4, 7)
 
     @staticmethod
     def capture_stdout(rect, method):
@@ -115,29 +119,58 @@ class TestRecDisplay(unittest.TestCase):
         sys.stdout = sys.__stdout__
         return capture
 
-    def test_display_width_height(self):
-        r = Rectangle(2, 3, 0, 0, 0)
-        capture = TestRecDisplay.capture_stdout(r, "display")
+    def test_display_wh(self):
+        capture = TestRecDisplay.capture_stdout(self.r1, "display")
         self.assertEqual("##\n##\n##\n", capture.getvalue())
 
-    def test_display_width_height_x(self):
-        r = Rectangle(3, 2, 1, 0, 1)
-        capture = TestRecDisplay.capture_stdout(r, "display")
+    def test_display_whx(self):
+        capture = TestRecDisplay.capture_stdout(self.r2, "display")
         self.assertEqual(" ###\n ###\n", capture.getvalue())
 
-    def test_display_width_height_y(self):
-        r = Rectangle(4, 5, 0, 1, 0)
-        capture = TestRecDisplay.capture_stdout(r, "display")
+    def test_display_why(self):
+        capture = TestRecDisplay.capture_stdout(self.r3, "display")
         display = "\n####\n####\n####\n####\n####\n"
         self.assertEqual(display, capture.getvalue())
 
-    def test_display_width_height_x_y(self):
-        r = Rectangle(2, 4, 3, 2, 0)
-        capture = TestRecDisplay.capture_stdout(r, "display")
+    def test_display_whxy(self):
+        capture = TestRecDisplay.capture_stdout(self.r4, "display")
         display = "\n\n   ##\n   ##\n   ##\n   ##\n"
         self.assertEqual(display, capture.getvalue())
 
     def test_display_one_arg(self):
-        r = Rectangle(5, 1, 2, 4, 7)
         with self.assertRaises(TypeError):
-            r.display(1)
+            self.r5.display(1)
+
+    def test_str_wh(self):
+        r = Rectangle(4, 6)
+        capture = TestRecDisplay.capture_stdout(r, "print")
+        correct = "[Rectangle] ({}) 0/0 - 4/6\n".format(r.id)
+        self.assertEqual(correct, capture.getvalue())
+
+    def test_str_whx(self):
+        r = Rectangle(5, 5, 1)
+        correct = "[Rectangle] ({}) 1/0 - 5/5".format(r.id)
+        self.assertEqual(correct, r.__str__())
+
+    def test_str_whxy(self):
+        r = Rectangle(1, 8, 2, 4)
+        correct = "[Rectangle] ({}) 2/4 - 1/8".format(r.id)
+        self.assertEqual(correct, str(r))
+
+    def test_str_whixy(self):
+        r = Rectangle(13, 21, 2, 4, 7)
+        self.assertEqual("[Rectangle] (7) 2/4 - 13/21", str(r))
+
+    def test_str_change_atr(self):
+        r = Rectangle(7, 7, 0, 0, [4])
+        r.width = 15
+        r.height = 1
+        r.x = 8
+        r.y = 10
+        self.assertEqual("[Rectangle] ([4]) 8/10 - 15/1", str(r))
+
+    def test_str_arg1(self):
+        r = Rectangle(1, 2, 3, 4, 5)
+        with self.assertRaises(TypeError):
+            r.__str__(1)
+
