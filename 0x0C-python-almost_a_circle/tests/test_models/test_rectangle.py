@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """ Unittes for Rectangle """
 import unittest
+import io
+import sys
 from models.rectangle import Rectangle
 
 
@@ -89,3 +91,53 @@ class TestRecArea(unittest.TestCase):
         self.rec4.width = 5
         self.rec4.height = 6
         self.assertEqual(30, self.rec4.area())
+            
+class TestRecDisplay(unittest.TestCase):
+    """ tests displaying rectangle to stdout """
+    def setUp(self):
+        pass
+
+    @staticmethod
+    def capture_stdout(rect, method):
+        """Captures and returns text printed to stdout.
+        Args:
+            rect (Rectangle): The Rectangle to print to stdout.
+            method (str): The method to run on rect.
+        Returns:
+            The text printed to stdout by calling method on sq.
+        """
+        capture = io.StringIO()
+        sys.stdout = capture
+        if method == "print":
+            print(rect)
+        else:
+            rect.display()
+        sys.stdout = sys.__stdout__
+        return capture
+
+    def test_display_width_height(self):
+        r = Rectangle(2, 3, 0, 0, 0)
+        capture = TestRecDisplay.capture_stdout(r, "display")
+        self.assertEqual("##\n##\n##\n", capture.getvalue())
+
+    def test_display_width_height_x(self):
+        r = Rectangle(3, 2, 1, 0, 1)
+        capture = TestRecDisplay.capture_stdout(r, "display")
+        self.assertEqual(" ###\n ###\n", capture.getvalue())
+
+    def test_display_width_height_y(self):
+        r = Rectangle(4, 5, 0, 1, 0)
+        capture = TestRecDisplay.capture_stdout(r, "display")
+        display = "\n####\n####\n####\n####\n####\n"
+        self.assertEqual(display, capture.getvalue())
+
+    def test_display_width_height_x_y(self):
+        r = Rectangle(2, 4, 3, 2, 0)
+        capture = TestRecDisplay.capture_stdout(r, "display")
+        display = "\n\n   ##\n   ##\n   ##\n   ##\n"
+        self.assertEqual(display, capture.getvalue())
+
+    def test_display_one_arg(self):
+        r = Rectangle(5, 1, 2, 4, 7)
+        with self.assertRaises(TypeError):
+            r.display(1)
