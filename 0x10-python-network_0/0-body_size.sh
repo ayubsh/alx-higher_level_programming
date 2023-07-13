@@ -1,6 +1,4 @@
 #!/bin/bash
 # displayes tge size the and body of reponse
 
-url="$1"
-
-curl -sI "$url" | grep "Content-Length:" | cut -d " " -f 2
+curl -sI "$1" | grep "Content-Length:" | cut -d " " -f 2
