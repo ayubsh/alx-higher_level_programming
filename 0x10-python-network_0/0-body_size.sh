@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # displayes tge size the and body of reponse
 
 url="$1"
